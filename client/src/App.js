@@ -1,40 +1,52 @@
-import logo from './mech-pro-sol.svg';
 import './App.css';
 import Project from './components/Project';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ContactUs from './components/ContacUs';
 import CareerPage from './components/CareerPage';
 import AboutUsPage from './components/AboutUs';
-import { FaChevronDown } from 'react-icons/fa';
+import Admin from './components/Admin';
+import LoginPage from './components/LoginPage';
+import { CookiesProvider, useCookies } from 'react-cookie'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import NavBar from './components/NavBar';
 
 function App() {
+  const [cookies, setCookie] = useCookies(['user'])
+  const [posts, setPosts] = useState();
+
+  function handleLogin(user) {
+    setCookie('user', user, { path: '/' })
+  }
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/data');
+        setPosts(response.data)
+        console.log(response.data);
+        console.log(posts);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
   return (
     <BrowserRouter>
-      <div className="App font-appContent flex flex-col gap-[100px]">
-        <header className="bg-[#868d9d] text-white flex justify-between">
-          <div className='bg-white w-max'>
-            <img src={logo} className="App-logo h-[20px]" alt="logo" />
-          </div>
-          <div className='flex w-[70%] items-center justify-around'>
-            <Link to="/" className='hover:bg-[#262b31] text-left rounded-[4px] p-[5px] hover:text-white hover:scale-105 hover:ease-linear duration-150'>Home</Link>
-            <div className='cursor-pointer group relative hover:bg-[#262b31] text-left rounded-[4px] p-[5px] hover:text-white hover:scale-105 hover:ease-linear duration-150 '>
-              <div className='flex items-center gap-[10px] '><p>Categories</p> <FaChevronDown /></div>
-              <div className='absolute hidden top-[100%] left-0 group-hover:flex bg-white text-black shadow-md flex-col w-max p-[5px] items-start '>
-                <p className='hover:bg-[#262b31] text-left rounded-[4px] p-[5px] hover:text-white w-full'><Link>Software Projects</Link></p>
-                <p className='hover:bg-[#262b31] text-left rounded-[4px] p-[5px] hover:text-white w-full'><Link>Electronics Projects</Link></p>
-              </div>
-            </div>
-            <Link to="/contactus" className='hover:bg-[#262b31] text-left rounded-[4px] p-[5px] hover:text-white hover:scale-105 hover:ease-linear duration-150'>Contact</Link>
-            <Link to="/career" className='hover:bg-[#262b31] text-left rounded-[4px] p-[5px] hover:text-white hover:scale-105 hover:ease-linear duration-150'>Career</Link>
-            <Link to="aboutus" className='hover:bg-[#262b31] text-left rounded-[4px] p-[5px] hover:text-white hover:scale-105 hover:ease-linear duration-150'>About Us</Link>
-          </div>
-        </header>
-
+      <div className="font-appContent flex flex-col gap-[20px]">
+        <NavBar />
         <Routes>
-          <Route path='/' element={<Project />} />
+          <Route path='/' element={<Project posts={posts} />} />
           <Route path='/contactus' element={<ContactUs />} />
           <Route path='/career' element={<CareerPage />} />
           <Route path='/aboutus' element={<AboutUsPage />} />
+          {/* <Route path='/admin' element={<LoginPage />} /> */}
+          <Route path='/admin' element={
+            <CookiesProvider>
+              {cookies.user ? <Admin /> : <LoginPage onLogin={handleLogin} />}
+            </CookiesProvider>
+          } />
         </Routes>
       </div >
     </BrowserRouter >

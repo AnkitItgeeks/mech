@@ -70,10 +70,7 @@ const ContactUs = () => {
             />
           </div>
           <div className='flex items-center justify-center gap-[10px] w-full'>
-            <button
-              className="bg-[#44484f] hover:bg-[#262b31] hover:scale-105 hover:ease-linear duration-300 will-change-transform text-white font-bold p-[5px] rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
+            <button className="bg-[#44484f] hover:bg-[#262b31] hover:scale-105 hover:ease-linear duration-300 will-change-transform text-white font-bold p-[5px] rounded focus:outline-none focus:shadow-outline" type="submit">
               Submit
             </button>
           </div>
