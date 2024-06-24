@@ -2,7 +2,7 @@ import React from 'react';
 
 const AboutUsPage = () => {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto">
       <h1 className="text-3xl font-semibold mb-4">About Us</h1>
       <p className="text-lg text-gray-700 mb-8">
         At XYZ Projects, we specialize in providing high-quality software and electronics projects to

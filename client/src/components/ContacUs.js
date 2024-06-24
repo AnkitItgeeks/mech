@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 const ContactUs = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const form = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can handle form submission here, like sending the data to your backend
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Message:', message);
-    // Reset form fields after submission
+
+    emailjs
+      .sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, {
+        publicKey: 'YOUR_PUBLIC_KEY',
+      })
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
     setName('');
     setEmail('');
     setMessage('');
@@ -20,16 +30,16 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="flex flex-col w-full gap-[10px]">
-      <h2 className="text-2xl font-bold">Contact Us</h2>
+    <div className="flex flex-col gap-[10px] w-[80%] mx-auto">
+      <h2 className="text-[30px] font-semibold font-appFont text-center">Contact Us</h2>
       {submitted ? (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
           Thank you for contacting us! We will get back to you soon.
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className='flex flex-col gap-[10px] w-[80%] mx-auto'>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-[10px] w-[100%] mx-auto'>
           <div className="flex items-center gap-[10px] w-full">
-            <label className="text-sm font-medium w-[20%] text-right" htmlFor="name">
+            <label className="text-sm font-medium w-[10%] text-right" htmlFor="name">
               Name:
             </label>
             <input
@@ -43,7 +53,7 @@ const ContactUs = () => {
             />
           </div>
           <div className="flex items-center gap-[10px]">
-            <label className="text-sm font-medium w-[20%] text-right" htmlFor="email">
+            <label className="text-sm font-medium w-[10%] text-right" htmlFor="email">
               Email:
             </label>
             <input
@@ -57,7 +67,7 @@ const ContactUs = () => {
             />
           </div>
           <div className="flex items-center gap-[10px]">
-            <label className="text-sm font-medium w-[20%] text-right" htmlFor="message">
+            <label className="text-sm font-medium w-[10%] text-right" htmlFor="message">
               Message:
             </label>
             <textarea

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import logo from '../logo.svg'
 
 
-const NavBar = () => {
+const NavBar = ({ cookies }) => {
     return (
         <header className="bg-[#868d9d] text-white flex justify-between">
             <div className='bg-white w-max'>
@@ -23,7 +23,7 @@ const NavBar = () => {
                 <Link to="/career" className='hover:bg-[#262b31] text-left rounded-[4px] p-[5px] hover:text-white hover:scale-105 hover:ease-linear duration-150'>Career</Link>
                 <Link to="aboutus" className='hover:bg-[#262b31] text-left rounded-[4px] p-[5px] hover:text-white hover:scale-105 hover:ease-linear duration-150'>About Us</Link>
             </div>
-            <div className='bg-black w-[220px] flex items-center justify-center'><Link to="/admin">Admin</Link></div>
+            <div className='bg-black w-[220px] flex items-center justify-center'><Link to="/admin">{cookies ? "Admin" : "Login"}</Link></div>
         </header>
     )
 }
