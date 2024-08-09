@@ -9,11 +9,9 @@ function Inputs(props){
       // let data=JSON.stringify(task)
       axios.post('http://localhost:5000/projects', task)
         .then((res) => {
-          console.log(res);
           if (res.data) {
           // props.getProjects();
             setTodo({ action: '' });
-            console.log('post is working');
           }
         })
         .catch((err) => console.log(err));

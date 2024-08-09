@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { FaArrowRightLong } from "react-icons/fa6";
+import toast, { Toaster } from 'react-hot-toast';
 
 const LoginPage = ({ onLogin }) => {
     const [loginDetails, setLoginDetail] = useState({
@@ -27,12 +28,11 @@ const LoginPage = ({ onLogin }) => {
         } else {
             axios.post("http://localhost:5000/admin", { ...loginDetails })
                 .then(result => {
-                    console.log(result)
                     if (result.data === "Success") {
                         onLogin(loginDetails)
-                        alert("Welcome Admin")
+                        toast.success('Welcome Admin!')
                     } else {
-                        alert("You are not Admin")
+                        toast.error('You are not Admin!')
                     }
                 })
                 .catch(err => console.log(err))
@@ -40,6 +40,7 @@ const LoginPage = ({ onLogin }) => {
     }
     return (
         <div className='flex flex-col gap-[20px] h-[80vh] justify-between'>
+            <Toaster/>
             <div className='flex flex-col gap-[20px]'>
                 <div className='flex justify-center items-center'>
                     <h1 className='font-headingFont text-5xl w-1/3 max-w-[650px] text-center cursor-default'>Login to Your Account</h1>
@@ -53,7 +54,7 @@ const LoginPage = ({ onLogin }) => {
                                 {loginDetailsErrors.email && <p className='absolute bottom-[-15px] text-red-600 text-[12px]'>{loginDetailsErrors.email}</p>}
                             </div>
                             <div className='border p-3 rounded-full bg-white relative'>
-                                <input type='text' name='password' id='password' placeholder='Password'
+                                <input type='password' name='password' id='password' placeholder='Password'
                                     onChange={changeHandler} className='font-bodyFont outline-none w-full' />
                                 {loginDetailsErrors.password && <p className='absolute bottom-[-15px] text-red-600 text-[12px]'>{loginDetailsErrors.password}</p>}
 

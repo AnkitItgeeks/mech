@@ -2,7 +2,7 @@ import React from 'react';
 
 const CareerPage = () => {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto">
       <h1 className="text-3xl font-semibold mb-4">Join Our Team</h1>
       <p className="text-lg text-gray-700 mb-8">
         We're always looking for talented individuals to join our team. If you're passionate about what you do

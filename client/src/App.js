@@ -19,18 +19,15 @@ function App() {
   function handleLogin(user) {
     setCookie('user', user, { path: '/' })
   }
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/data');
+      setPosts(response.data)
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/data');
-        setPosts(response.data)
-        console.log(response.data);
-        console.log(posts);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
     fetchUsers();
   }, []);
   return (
@@ -50,6 +47,7 @@ function App() {
             </CookiesProvider>
           } />
         </Routes>
+        <Footer />
       </div >
     </BrowserRouter >
   );
