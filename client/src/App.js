@@ -10,6 +10,7 @@ import { CookiesProvider, useCookies } from 'react-cookie'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import NavBar from './components/NavBar';
+import SingleProject from './components/SingleProject';
 
 function App() {
   const [cookies, setCookie] = useCookies(['user'])
@@ -34,10 +35,11 @@ function App() {
   }, []);
   return (
     <BrowserRouter>
-      <div className="font-appContent flex flex-col gap-[20px]">
+      <div className="font-appContent bg-gradient-to-r from-[#5c3119] to-[#868d9d] items-center gap-24 flex flex-col">
         <NavBar />
         <Routes>
           <Route path='/' element={<Project posts={posts} />} />
+          <Route path='/project/:id' element={<SingleProject posts={posts}></SingleProject>} />
           <Route path='/contactus' element={<ContactUs />} />
           <Route path='/career' element={<CareerPage />} />
           <Route path='/aboutus' element={<AboutUsPage />} />
